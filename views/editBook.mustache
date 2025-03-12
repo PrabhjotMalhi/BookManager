@@ -1,0 +1,35 @@
+{{>layout}}
+{{$content}}
+  <h2>Edit Book</h2>
+  {{#error}}<div class="error">{{error}}</div>{{/error}}
+  <form action="/update/{{book.rowid}}" method="POST">
+    <label>Title:</label>
+    <input type="text" name="title" value="{{book.title}}" required>
+    
+    <label>Author:</label>
+    <input type="text" name="author" value="{{book.author}}" required>
+    
+    <label>Genre:</label>
+    <select name="genre">
+      <option value="Fantasy" {{#book.genreFantasy}}selected{{/book.genreFantasy}}>Fantasy</option>
+      <option value="Sci-Fi" {{#book.genreSci-Fi}}selected{{/book.genreSci-Fi}}>Sci-Fi</option>
+      <option value="Mystery" {{#book.genreMystery}}selected{{/book.genreMystery}}>Mystery</option>
+    </select>
+    
+    <label>Rating (0-5):</label>
+    <input type="number" name="rating" step="0.1" min="0" max="5" value="{{book.rating}}" required>
+    
+    <label>Status:</label>
+    <select name="status">
+      <option value="Read" {{#book.statusRead}}selected{{/book.statusRead}}>Read</option>
+      <option value="Reading" {{#book.statusReading}}selected{{/book.statusReading}}>Reading</option>
+      <option value="Unread" {{#book.statusUnread}}selected{{/book.statusUnread}}>Unread</option>
+    </select>
+    
+    <label>Publish Year:</label>
+    <input type="number" name="publish_year" value="{{book.publish_year}}" required>
+    
+    <button type="submit">Update Book</button>
+  </form>
+  <a href="/">Cancel</a>
+{{/content}}
