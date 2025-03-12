@@ -2,17 +2,16 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./db/books.db');
 
 db.serialize(() => {
-    db.run('
-        CREATE TABLE IF NOT EXISTS books (
+    db.run(`CREATE TABLE IF NOT EXISTS books (
             rowid INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT NOT null, 
-            author TEXT NOT null, 
+            title TEXT NOT NULL, 
+            author TEXT NOT NULL, 
             genre TEXT,
             rating REAL,
             status TEXT,
             publish_year INTEGER
         )
-    ');
+    `);
 });
 
 
