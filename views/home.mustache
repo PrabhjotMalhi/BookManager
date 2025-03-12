@@ -1,0 +1,25 @@
+{{>layout}}
+{{$content}}
+  <a href="/add">Add New Book</a>
+  <table class="book-table">
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+      <th class="genre-column">Genre</th>
+      <th>Rating</th>
+      <th>Actions</th>
+    </tr>
+    {{#books}}
+      <tr>
+        <td>{{title}}</td>
+        <td>{{author}}</td>
+        <td class="genre-column">{{genre}}</td>
+        <td>{{rating}}/5</td>
+        <td>
+          <a href="/edit/{{rowid}}">Edit</a>
+          <a href="/delete/{{rowid}}">Delete</a>
+        </td>
+      </tr>
+    {{/books}}
+  </table>
+{{/content}}
