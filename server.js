@@ -1,10 +1,12 @@
 const express = require('express');
-const mustache = require('mustache-express');
+const mustacheExpress = require('mustache-express');
 const app = express();
 const port = 3000;
 
 // configuring mustache
-app.engine('mustache', mustache());
+const mustache = mustacheExpress();
+mustache.cache = null;
+app.engine('mustache', mustache);
 app.set('view engine', 'mustache');
 app.set('views', __dirname + '/views');
 

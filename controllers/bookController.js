@@ -6,30 +6,30 @@ const home = (req, res) => {
   if (search) {
     model.searchBooks(search, (err, books) => {
       if (err) return res.send('Database error');
-      res.render('home', { books, search });
+      res.render('home', { layout: 'layout', books, search });
     });
   } else if (genre) {
     model.getBooksByGenre(genre, (err, books) => {
       if (err) return res.send('Database error');
-      res.render('home', { books, selectedGenre: genre });
+      res.render('home', { layout: 'layout', books, selectedGenre: genre });
     });
   } else if (sort) {
     model.getSortedBooks(sort, (err, books) => {
       if (err) return res.send('Database error');
-      res.render('home', { books, sortBy: sort });
+      res.render('home', { layout: 'layout', books, sortBy: sort });
     });
   } else {
     model.getAllBooks((err, books) => {
       if (err) return res.send('Database error');
       // Get unique genres for filter dropdown
       const genres = [...new Set(books.map(book => book.genre))];
-      res.render('home', { books, genres });
+      res.render('home', { layout: 'layout', books, genres });
     });
   }
 };
 
 const addForm = (req, res) => {
-  res.render('add');
+  res.render('add', { layout: 'layout' });
 };
 
 const addBook = (req, res) => {
@@ -37,10 +37,10 @@ const addBook = (req, res) => {
   
   // Book Validation
   if (!title || title.length < 3) {
-    return res.render('add', { error: 'Title must be ≥3 characters!', ...req.body });
+    return res.render('add', { layout: 'layout', error: 'Title must be ≥3 characters!', ...req.body });
   }
   if (rating < 0 || rating > 5) {
-    return res.render('add', { error: 'Rating must be 0-5!', ...req.body });
+    return res.render('add', { layout: 'layout', error: 'Rating must be 0-5!', ...req.body });
   }
 
   model.addBook(req.body, (err) => {
@@ -53,7 +53,7 @@ const editForm = (req, res) => {
   const id = req.params.id;
   model.getAllBooks((err, books) => {
     const book = books.find(b => b.rowid == id);
-    res.render('edit', { book });
+    res.render('edit', { layout: 'layout', book });
   });
 };
 
