@@ -1,10 +1,31 @@
 const model = require('../models/bookModel');
 
 const home = (req, res) => {
-  model.getAllBooks((err, books) => {
-    if (err) return res.send('Database error');
-    res.render('home', { books });
-  });
+  const { genre, sort, search } = req.query;
+
+  if (search) {
+    model.searchBooks(search, (err, books) => {
+      if (err) return res.send('Database error');
+      res.render('home', { books, search });
+    });
+  } else if (genre) {
+    model.getBooksByGenre(genre, (err, books) => {
+      if (err) return res.send('Database error');
+      res.render('home', { books, selectedGenre: genre });
+    });
+  } else if (sort) {
+    model.getSortedBooks(sort, (err, books) => {
+      if (err) return res.send('Database error');
+      res.render('home', { books, sortBy: sort });
+    });
+  } else {
+    model.getAllBooks((err, books) => {
+      if (err) return res.send('Database error');
+      // Get unique genres for filter dropdown
+      const genres = [...new Set(books.map(book => book.genre))];
+      res.render('home', { books, genres });
+    });
+  }
 };
 
 const addForm = (req, res) => {
@@ -52,4 +73,24 @@ const deleteBook = (req, res) => {
   });
 };
 
-module.exports = { home, addForm, addBook, editForm, updateBook, deleteBook };
+const bulkDelete = (req, res) => {
+  const { genre } = req.body;
+  if (!genre) {
+    return res.redirect('/');
+  }
+  
+  model.bulkDeleteByGenre(genre, (err) => {
+    if (err) return res.send('Error deleting books');
+    res.redirect('/');
+  });
+};
+
+module.exports = {
+    home,
+    addForm,
+    addBook,
+    editForm,
+    updateBook,
+    deleteBook,
+    bulkDelete
+};

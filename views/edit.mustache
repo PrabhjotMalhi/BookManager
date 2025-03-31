@@ -1,0 +1,69 @@
+{{> layout}}
+
+<div class="form-container">
+    <h2>Edit Book</h2>
+    
+    {{#error}}
+    <div class="alert alert-danger">
+        {{error}}
+    </div>
+    {{/error}}
+
+    <form action="/update/{{book.rowid}}" method="POST">
+        <div class="form-group">
+            <label for="title">Title *</label>
+            <input type="text" id="title" name="title" class="form-control" value="{{book.title}}" required minlength="3">
+            <small>Must be at least 3 characters</small>
+        </div>
+
+        <div class="form-group">
+            <label for="author">Author *</label>
+            <input type="text" id="author" name="author" class="form-control" value="{{book.author}}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="genre">Genre *</label>
+            <select id="genre" name="genre" class="form-control" required>
+                <option value="">Select a genre</option>
+                <option value="Fiction" {{#equals book.genre "Fiction"}}selected{{/equals}}>Fiction</option>
+                <option value="Non-Fiction" {{#equals book.genre "Non-Fiction"}}selected{{/equals}}>Non-Fiction</option>
+                <option value="Fantasy" {{#equals book.genre "Fantasy"}}selected{{/equals}}>Fantasy</option>
+                <option value="Science Fiction" {{#equals book.genre "Science Fiction"}}selected{{/equals}}>Science Fiction</option>
+                <option value="Mystery" {{#equals book.genre "Mystery"}}selected{{/equals}}>Mystery</option>
+                <option value="Biography" {{#equals book.genre "Biography"}}selected{{/equals}}>Biography</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="rating">Rating *</label>
+            <input type="number" id="rating" name="rating" class="form-control" value="{{book.rating}}" min="0" max="5" step="0.1" required>
+            <small>Rate from 0 to 5</small>
+        </div>
+
+        <div class="form-group">
+            <label for="status">Reading Status *</label>
+            <select id="status" name="status" class="form-control" required>
+                <option value="">Select status</option>
+                <option value="Unread" {{#equals book.status "Unread"}}selected{{/equals}}>Unread</option>
+                <option value="Reading" {{#equals book.status "Reading"}}selected{{/equals}}>Reading</option>
+                <option value="Completed" {{#equals book.status "Completed"}}selected{{/equals}}>Completed</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="publish_year">Publication Year</label>
+            <input type="number" id="publish_year" name="publish_year" class="form-control" value="{{book.publish_year}}" min="1000" max="{{currentYear}}">
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save btn-icon"></i>
+                <span class="btn-text">Update Book</span>
+            </button>
+            <a href="/" class="btn btn-secondary">
+                <i class="fas fa-times btn-icon"></i>
+                <span class="btn-text">Cancel</span>
+            </a>
+        </div>
+    </form>
+</div> 

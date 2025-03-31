@@ -1,26 +1,92 @@
 {{>layout}}
 
-{{#content}}
-  <a href="/add">Add New Book</a>
-  <table class="book-table">
-    <tr>
-      <th>Title</th>
-      <th>Author</th>
-      <th class="genre-column">Genre</th>
-      <th>Rating</th>
-      <th>Actions</th>
-    </tr>
-    {{#books}}
-      <tr>
-        <td>{{title}}</td>
-        <td>{{author}}</td>
-        <td class="genre-column">{{genre}}</td>
-        <td>{{rating}}/5</td>
-        <td>
-          <a href="/edit/{{rowid}}">Edit</a>
-          <a href="/delete/{{rowid}}">Delete</a>
-        </td>
-      </tr>
-    {{/books}}
-  </table>
-{{/content}}
+<div class="filters">
+    <div class="search-bar">
+        <form action="/" method="GET" class="form-group">
+            <input type="text" name="search" class="form-control" placeholder="Search by title or author..." value="{{search}}">
+        </form>
+    </div>
+    
+    <div class="filter-group">
+        <form action="/" method="GET" class="form-group">
+            <select name="genre" class="form-control" onchange="this.form.submit()">
+                <option value="">Filter by Genre</option>
+                {{#genres}}
+                <option value="{{.}}" {{#selectedGenre}}{{#equals . ../selectedGenre}}selected{{/equals}}{{/selectedGenre}}>{{.}}</option>
+                {{/genres}}
+            </select>
+        </form>
+    </div>
+
+    <div class="sort-group">
+        <form action="/" method="GET" class="form-group">
+            <select name="sort" class="form-control" onchange="this.form.submit()">
+                <option value="">Sort by...</option>
+                <option value="title" {{#equals sortBy "title"}}selected{{/equals}}>Title</option>
+                <option value="author" {{#equals sortBy "author"}}selected{{/equals}}>Author</option>
+                <option value="rating" {{#equals sortBy "rating"}}selected{{/equals}}>Rating</option>
+            </select>
+        </form>
+    </div>
+
+    <a href="/add" class="btn btn-primary">
+        <i class="fas fa-plus btn-icon"></i>
+        <span class="btn-text">Add Book</span>
+    </a>
+</div>
+
+<div class="bulk-delete">
+    <form action="/bulk-delete" method="POST" class="form-group">
+        <select name="genre" class="form-control" required>
+            <option value="">Delete all books in genre...</option>
+            {{#genres}}
+            <option value="{{.}}">{{.}}</option>
+            {{/genres}}
+        </select>
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete all books in this genre?')">
+            <i class="fas fa-trash btn-icon"></i>
+            <span class="btn-text">Delete All</span>
+        </button>
+    </form>
+</div>
+
+<table class="book-table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Rating</th>
+            <th class="hide-mobile">Status</th>
+            <th class="hide-mobile">Year</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#books}}
+        <tr>
+            <td>{{title}}</td>
+            <td>{{author}}</td>
+            <td>{{genre}}</td>
+            <td>{{rating}}/5</td>
+            <td class="hide-mobile">{{status}}</td>
+            <td class="hide-mobile">{{publish_year}}</td>
+            <td>
+                <a href="/edit/{{rowid}}" class="btn btn-primary">
+                    <i class="fas fa-edit btn-icon"></i>
+                    <span class="btn-text">Edit</span>
+                </a>
+                <a href="/delete/{{rowid}}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this book?')">
+                    <i class="fas fa-trash btn-icon"></i>
+                    <span class="btn-text">Delete</span>
+                </a>
+            </td>
+        </tr>
+        {{/books}}
+        {{^books}}
+        <tr>
+            <td colspan="7" style="text-align: center;">No books found</td>
+        </tr>
+        {{/books}}
+    </tbody>
+</table>
