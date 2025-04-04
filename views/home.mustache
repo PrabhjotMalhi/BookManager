@@ -1,3 +1,4 @@
+{{> layout}}
 <div class="filters">
     <div class="search-bar">
         <form action="/" method="GET" class="form-group">
@@ -8,10 +9,14 @@
     <div class="filter-group">
         <form action="/" method="GET" class="form-group">
             <select name="genre" class="form-control" onchange="this.form.submit()">
-                <option value="">Filter by Genre</option>
-                {{#genres}}
-                <option value="{{.}}" {{#selectedGenre}}{{#equals . ../selectedGenre}}selected{{/equals}}{{/selectedGenre}}>{{.}}</option>
-                {{/genres}}
+                <option value="">{{#selectedGenre}}{{selectedGenre}}{{/selectedGenre}}{{^selectedGenre}}All Genres{{/selectedGenre}}</option>
+                <option value="">All Genres</option>
+                <option value="Fiction">Fiction</option>
+                <option value="Non-Fiction">Non-Fiction</option>
+                <option value="Fantasy">Fantasy</option>
+                <option value="Science Fiction">Science Fiction</option>
+                <option value="Mystery">Mystery</option>
+                <option value="Biography">Biography</option>
             </select>
         </form>
     </div>
@@ -19,10 +24,11 @@
     <div class="sort-group">
         <form action="/" method="GET" class="form-group">
             <select name="sort" class="form-control" onchange="this.form.submit()">
+                <option value="">{{#sortBy}}Sort by: {{sortBy}}{{/sortBy}}{{^sortBy}}Sort by...{{/sortBy}}</option>
                 <option value="">Sort by...</option>
-                <option value="title" {{#equals sortBy "title"}}selected{{/equals}}>Title</option>
-                <option value="author" {{#equals sortBy "author"}}selected{{/equals}}>Author</option>
-                <option value="rating" {{#equals sortBy "rating"}}selected{{/equals}}>Rating</option>
+                <option value="title">Title</option>
+                <option value="author">Author</option>
+                <option value="rating">Rating</option>
             </select>
         </form>
     </div>
