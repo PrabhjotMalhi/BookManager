@@ -1,3 +1,4 @@
+{{> layout}}
 <div class="form-container">
     <h2>Edit Book</h2>
     
@@ -23,12 +24,12 @@
             <label for="genre">Genre *</label>
             <select id="genre" name="genre" class="form-control" required>
                 <option value="">Select a genre</option>
-                <option value="Fiction" {{#equals book.genre "Fiction"}}selected{{/equals}}>Fiction</option>
-                <option value="Non-Fiction" {{#equals book.genre "Non-Fiction"}}selected{{/equals}}>Non-Fiction</option>
-                <option value="Fantasy" {{#equals book.genre "Fantasy"}}selected{{/equals}}>Fantasy</option>
-                <option value="Science Fiction" {{#equals book.genre "Science Fiction"}}selected{{/equals}}>Science Fiction</option>
-                <option value="Mystery" {{#equals book.genre "Mystery"}}selected{{/equals}}>Mystery</option>
-                <option value="Biography" {{#equals book.genre "Biography"}}selected{{/equals}}>Biography</option>
+                <option value="Fiction">Fiction</option>
+                <option value="Non-Fiction">Non-Fiction</option>
+                <option value="Fantasy">Fantasy</option>
+                <option value="Science Fiction">Science Fiction</option>
+                <option value="Mystery">Mystery</option>
+                <option value="Biography">Biography</option>
             </select>
         </div>
 
@@ -42,9 +43,9 @@
             <label for="status">Reading Status *</label>
             <select id="status" name="status" class="form-control" required>
                 <option value="">Select status</option>
-                <option value="Unread" {{#equals book.status "Unread"}}selected{{/equals}}>Unread</option>
-                <option value="Reading" {{#equals book.status "Reading"}}selected{{/equals}}>Reading</option>
-                <option value="Completed" {{#equals book.status "Completed"}}selected{{/equals}}>Completed</option>
+                <option value="Unread">Unread</option>
+                <option value="Reading">Reading</option>
+                <option value="Completed">Completed</option>
             </select>
         </div>
 

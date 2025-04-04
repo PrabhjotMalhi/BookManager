@@ -4,9 +4,7 @@ const app = express();
 const port = 3000;
 
 // configuring mustache
-const mustache = mustacheExpress();
-mustache.cache = null;
-app.engine('mustache', mustache);
+app.engine('mustache', mustacheExpress(__dirname + '/views/partials', '.mustache'));
 app.set('view engine', 'mustache');
 app.set('views', __dirname + '/views');
 
